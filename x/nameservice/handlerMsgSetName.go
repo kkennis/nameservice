@@ -8,18 +8,10 @@ import (
 	"github.com/user/nameservice/x/nameservice/keeper"
 )
 
-func handleMsgSetName(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetName) (*sdk.Result, error) {
-	var name = types.Name{
-		Creator: msg.Creator,
-		ID:      msg.ID,
-    	Value: msg.Value,
-    	Price: msg.Price,
+func handleMsgSetName(ctx sdk.Context, keeper Keeper, msg MsgSetName) (*sdk.Result, error) {
+	if !msg.Owner.Equals(keeper.GetOwner(ctx, msg.Name)) { // Checks if the msg sender is same as the current owner
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner")
 	}
-	if !msg.Creator.Equals(k.GetNameOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error
-	}
-
-	k.SetName(ctx, name)
-
-	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
+	keeper.SetName(ctx, msg.Name, msg.Value) // If so, set the name to the value specified in the msg.
+	return &sdk.Result{}, nil // return
 }
