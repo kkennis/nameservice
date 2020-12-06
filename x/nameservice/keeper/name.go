@@ -11,7 +11,7 @@ func (k Keeper) GetNameOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	if err != nil {
 		return nil
 	}
-	return name.Creator
+	return name.Owner
 }
 
 

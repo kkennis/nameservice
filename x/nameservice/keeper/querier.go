@@ -16,7 +16,7 @@ func NewQuerier(k Keeper) sdk.Querier {
 		switch path[0] {
     	// this line is used by starport scaffolding # 2
 		case types.QueryResolveName:
-			return resolveName(ctx, k)
+			return resolveName(ctx, path[1:], k)
 		case types.QueryGetName:
 			return getName(ctx, path[1:], k)
 		case types.QueryListName:

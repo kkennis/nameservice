@@ -4,8 +4,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/sdk-tutorials/nameservice/nameservice/x/nameservice/keeper"
-	"github.com/cosmos/sdk-tutorials/nameservice/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/keeper"
+	"github.com/kkennis/nameservice/x/nameservice/types"
 )
 
 // Handle a message to buy name

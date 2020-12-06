@@ -1,12 +1,36 @@
 package keeper
 
 import (
+	"fmt"
+
+	"github.com/tendermint/tendermint/libs/log"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/kkennis/nameservice/x/nameservice/types"
 )
+
+// Keeper of the nameservice store
+type Keeper struct {
+	storeKey   sdk.StoreKey
+	cdc        *codec.Codec
+}
+
+// NewKeeper creates a nameservice keeper
+func NewKeeper(cdc *codec.Codec, key sdk.StoreKey) Keeper {
+	keeper := Keeper{
+		storeKey:   key,
+		cdc:        cdc,
+	}
+	return keeper
+}
+
+// Logger returns a module-specific logger.
+func (k Keeper) Logger(ctx sdk.Context) log.Logger {
+	return ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
+}
 
 // CreateName creates a name. This function is included in starport type scaffolding.
 // We won't use this function in our application, so it can be commented out.
@@ -49,6 +73,7 @@ func (k Keeper) DeleteName(ctx sdk.Context, key string) {
 
 func listName(ctx sdk.Context, k Keeper) ([]byte, error) {
 	var nameList []types.Name
+	store := ctx.KVStore(k.storeKey)
 	iterator := k.GetNamesIterator(ctx);
 	for ; iterator.Valid(); iterator.Next() {
 		var name types.Name
