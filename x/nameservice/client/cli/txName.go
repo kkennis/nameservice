@@ -31,12 +31,12 @@ func GetCmdBuyName(cdc *codec.Codec) *cobra.Command {
 			}
 
 			msg := types.NewMsgBuyName(argsName, coins, cliCtx.GetFromAddress())
-			err := msg.ValidateBasic()
+			err = msg.ValidateBasic()
 			if err != nil {
 				return err
 			}
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
-		}
+		},
 	}
 }
 
@@ -52,7 +52,7 @@ func GetCmdSetName(cdc *codec.Codec) *cobra.Command {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetName(cliCtx.GetFromAddress(), argsValue, argsName)
+			msg := types.NewMsgSetName(argsNamn, argsValue, cliCtx.GetFromAddress())
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err

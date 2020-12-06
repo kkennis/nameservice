@@ -6,7 +6,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	"github.com/cosmos/sdk-tutorials/nameservice/nameservice/x/nameservice/types"
+    "github.com/kkennis/nameservice/x/nameservice/types"
 	"github.com/gorilla/mux"
 )
 

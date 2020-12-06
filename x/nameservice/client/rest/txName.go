@@ -80,9 +80,9 @@ func setNameHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		}
 
 		msg := types.NewMsgSetName(
-			addr,
-			req.Value,
 			req.Name,
+			req.Value,
+			addr,
 		)
 
 		err = msg.ValidateBasic()
@@ -95,7 +95,7 @@ func setNameHandler(cliCtx context.CLIContext) http.HandlerFunc {
 	}
 }
 
-type deleteWhoisRequest struct {
+type deleteNameRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	Owner   string       `json:"owner"`
 	Name    string       `json:"name"`

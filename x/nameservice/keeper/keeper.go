@@ -5,7 +5,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/cosmos/sdk-tutorials/nameservice/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/types"
 )
 
 // CreateName creates a name. This function is included in starport type scaffolding.
