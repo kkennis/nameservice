@@ -4,7 +4,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/user/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/types"
     "github.com/cosmos/cosmos-sdk/codec"
 )
 
@@ -68,6 +68,21 @@ func getName(ctx sdk.Context, path []string, k Keeper) (res []byte, sdkError err
 	}
 
 	res, err = codec.MarshalJSONIndent(k.cdc, name)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error())
+	}
+
+	return res, nil
+}
+
+func resolveName(ctx sdk.Context, path []string, keeper Keeper) ([]byte, error) {
+	value := keeper.ResolveName(ctx, path[0])
+
+	if value == "" {
+		return []byte{}, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, "could not resolve name")
+	}
+
+	res, err := codec.MarshalJSONIndent(keeper.cdc, types.QueryResResolve{Value: value})
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error())
 	}

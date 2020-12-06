@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/user/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/types"
 )
 
 // GetTxCmd returns the transaction commands for this module
@@ -23,7 +23,7 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 
 	nameserviceTxCmd.AddCommand(flags.PostCommands(
     // this line is used by starport scaffolding # 1
-		GetCmdCreateName(cdc),
+		GetCmdBuyName(cdc),
 		GetCmdSetName(cdc),
 		GetCmdDeleteName(cdc),
 	)...)

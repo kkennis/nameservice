@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/user/nameservice/x/nameservice/types"
-	"github.com/user/nameservice/x/nameservice/keeper"
+	"github.com/kkennis/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/keeper"
 )
 
 func handleMsgSetName(ctx sdk.Context, keeper Keeper, msg MsgSetName) (*sdk.Result, error) {

@@ -10,46 +10,49 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	"github.com/user/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/types"
 )
 
-func GetCmdCreateName(cdc *codec.Codec) *cobra.Command {
+func GetCmdBuyName(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-name [value] [price]",
-		Short: "Creates a new name",
-		Args:  cobra.ExactArgs(2),
+		Use: 	"buy-name [name] [price]",
+		Short:	"Buys a new name",
+		Args: 	cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			argsValue := string(args[0] )
-			argsPrice := string(args[1] )
-			
+			argsName := string(args[0])
+
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateName(cliCtx.GetFromAddress(), string(argsValue), string(argsPrice))
+
+			coins, err := sdk.ParseCoins(args[1])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgBuyName(argsName, coins, cliCtx.GetFromAddress())
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
 			}
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
-		},
+		}
 	}
 }
 
-
 func GetCmdSetName(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "set-name [id]  [value] [price]",
+		Use:   "set-name [value] [name]",
 		Short: "Set a new name",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			id := args[0]
-			argsValue := string(args[1])
-			argsPrice := string(args[2])
+			argsValue := string(args[0])
+			argsName := string(args[1])
 			
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgSetName(cliCtx.GetFromAddress(), id, string(argsValue), string(argsPrice))
+			msg := types.NewMsgSetName(cliCtx.GetFromAddress(), argsValue, argsName)
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err

@@ -4,13 +4,13 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/user/nameservice/x/nameservice/types"
-	"github.com/user/nameservice/x/nameservice/keeper"
+	"github.com/kkennis/nameservice/x/nameservice/types"
+	"github.com/kkennis/nameservice/x/nameservice/keeper"
 )
 
 // Handle a message to delete name
-func handleMsgDeleteName(ctx sdk.Context, k keeper.Keeper, msg types.MsgDeleteName) (*sdk.Result, error) {
-	if !k.Exists(ctx, msg.Name) {
+func handleMsgDeleteName(ctx sdk.Context, keeper Keeper, msg types.MsgDeleteName) (*sdk.Result, error) {
+	if !keeper.Exists(ctx, msg.Name) {
 		// replace with ErrKeyNotFound for 0.39+
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, msg.Name)
 	}

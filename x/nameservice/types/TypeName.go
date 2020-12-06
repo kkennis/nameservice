@@ -17,9 +17,9 @@ type Name struct {
 }
 
 // NewName returns a new Name with the minprice as the price
-func NewName Name {
+func NewName() Name {
 	return Name{
-		Price: MinNamePrice
+		Price: MinNamePrice,
 	}
 }
 
@@ -27,5 +27,5 @@ func NewName Name {
 func (n Name) String() string {
 	return strings.TrimSpace(fmt.Sprintf(`Owner: %s
 Value: %s
-Price: %s`, n.Owner, n.Value, n.Price );
+Price: %s`, n.Owner, n.Value, n.Price ));
 }
